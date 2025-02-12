@@ -5,6 +5,7 @@ import numpy as np
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
+
 # Connect to MetaTrader 5
 def connect_mt5():
     if not mt5.initialize():
@@ -77,15 +78,21 @@ def strategy(symbol="EURUSD"):
         sma_50 = calculate_sma(data, 50)
         last_price = data['close'].iloc[-1]
 
+        print(f"SMA_20: {sma_20.iloc[-1]}, SMA_50: {sma_50.iloc[-1]}, Last Price: {last_price}")
+
         # Check for buy signal (SMA crossover)
         if sma_20.iloc[-1] > sma_50.iloc[-1] and last_price > sma_20.iloc[-1]:
             print("✅ Buy signal detected!")
             place_buy_order(symbol)
+        else:
+            print("❌ No buy signal.")
 
         # Check for sell signal (SMA crossover)
-        elif sma_20.iloc[-1] < sma_50.iloc[-1] and last_price < sma_20.iloc[-1]:
+        if sma_20.iloc[-1] < sma_50.iloc[-1] and last_price < sma_20.iloc[-1]:
             print("✅ Sell signal detected!")
             place_sell_order(symbol)
+        else:
+            print("❌ No sell signal.")
 
 # Run the strategy every minute
 if __name__ == "__main__":
