@@ -7,7 +7,8 @@ def connect_mt5():
     if not mt5.initialize():
         print("❌ Failed to connect!")
         return False
-    return True
+    else:
+        return True
 
 # Get open positions
 def get_open_positions():
