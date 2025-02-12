@@ -10,7 +10,7 @@ def connect_mt5():
     return True
 
 # Place Buy Order
-def place_buy_order(symbol="EURUSD", lot=0.1, stop_loss=50, take_profit=100):
+def place_buy_order(symbol="GBPUSD", lot=0.1, stop_loss=50, take_profit=100):
     price = mt5.symbol_info_tick(symbol).ask
     request = {
         "action": mt5.TRADE_ACTION_DEAL,
@@ -35,5 +35,5 @@ def place_buy_order(symbol="EURUSD", lot=0.1, stop_loss=50, take_profit=100):
 # Run
 if __name__ == "__main__":
     if connect_mt5():
-        place_buy_order("EURUSD")
+        place_buy_order("GBPUSD")
         mt5.shutdown()

@@ -2,8 +2,6 @@ import MetaTrader5 as mt5
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
-
-
 def connect_mt5():
     if not mt5.initialize():
         print("❌ Failed to connect to MetaTrader 5!")
