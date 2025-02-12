@@ -8,8 +8,9 @@ def connect_mt5():
         print("❌ Failed to connect to MetaTrader 5!")
         print(mt5.last_error())
         return False
-    print("✅ Connected to MetaTrader 5!")
-    return True
+    else:   
+        print("✅ Connected to MetaTrader 5!")
+        return True
 
 # Get account information
 def get_account_info():
