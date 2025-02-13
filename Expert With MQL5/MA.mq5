@@ -2,56 +2,59 @@
 //| 1-Minute Moving Average Crossover Strategy                      |
 //+------------------------------------------------------------------+
 #include <Trade/Trade.mqh>
-CTrade trade; // Trading object
+CTrade trade; 
 
-// Strategy Parameters
-input int fastPeriod = 5;   // Fast MA Period
-input int slowPeriod = 20;  // Slow MA Period
-input double lotSize = 0.1; // Lot Size
-input double stopLoss = 10; // Stop Loss in pips
-input double takeProfit = 20; // Take Profit in pips
-input string tradeSymbol = "EURUSD"; // Symbol to trade
-input ENUM_TIMEFRAMES timeFrame = PERIOD_M1; // 1-Minute Timeframe
+// Inputs
+input int fastPeriod = 5;   
+input int slowPeriod = 20;  
+input double lotSize = 0.1; 
+input double stopLoss = 10; 
+input double takeProfit = 20; 
+input string tradeSymbol = "EURUSD"; 
+input ENUM_TIMEFRAMES timeFrame = PERIOD_M1; 
 
 //+------------------------------------------------------------------+
-//| OnTick Function (Runs on Every New Tick)                        |
+//| OnTick Function (Runs Every Tick)                                |
 //+------------------------------------------------------------------+
 void OnTick()
 {
-   if(_Symbol != tradeSymbol) return; // Only trade on selected symbol
+   if(_Symbol != tradeSymbol) return; 
 
-   // Get MA values
-   double maFast = iMA(_Symbol, timeFrame, fastPeriod, 0, MODE_SMA, PRICE_CLOSE, 0);
-   double maSlow = iMA(_Symbol, timeFrame, slowPeriod, 0, MODE_SMA, PRICE_CLOSE, 0);
-   double maFastPrev = iMA(_Symbol, timeFrame, fastPeriod, 0, MODE_SMA, PRICE_CLOSE, 1);
-   double maSlowPrev = iMA(_Symbol, timeFrame, slowPeriod, 0, MODE_SMA, PRICE_CLOSE, 1);
+   // Get MA Handles
+   int fastMAHandle = iMA(_Symbol, timeFrame, fastPeriod, 0, MODE_SMA, PRICE_CLOSE);
+   int slowMAHandle = iMA(_Symbol, timeFrame, slowPeriod, 0, MODE_SMA, PRICE_CLOSE);
+
+   // Array to store indicator values
+   double fastMA[], slowMA[];
    
+   // Copy indicator values
+   if(CopyBuffer(fastMAHandle, 0, 0, 2, fastMA) < 0) return;
+   if(CopyBuffer(slowMAHandle, 0, 0, 2, slowMA) < 0) return;
+   
+   double maFast = fastMA[0];  
+   double maSlow = slowMA[0];  
+   double maFastPrev = fastMA[1];  
+   double maSlowPrev = slowMA[1];
+
    // Check if trade already open
-   if(PositionSelect(_Symbol))
-       return; // Don't open new trade if already in a position
+   if(PositionSelect(_Symbol)) return; 
    
    // Define Stop Loss & Take Profit
    double point = SymbolInfoDouble(_Symbol, SYMBOL_POINT);
    double slPips = stopLoss * point;
    double tpPips = takeProfit * point;
    
-   // Buy Condition: Fast MA crosses above Slow MA
+   // Buy Condition
    if(maFast > maSlow && maFastPrev <= maSlowPrev)
    {
       double buyPrice = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
-      double stopLossLevel = buyPrice - slPips;
-      double takeProfitLevel = buyPrice + tpPips;
-
-      trade.Buy(lotSize, _Symbol, buyPrice, stopLossLevel, takeProfitLevel, "MA Crossover Buy");
+      trade.Buy(lotSize, _Symbol, buyPrice, buyPrice - slPips, buyPrice + tpPips, "Buy Signal");
    }
 
-   // Sell Condition: Fast MA crosses below Slow MA
+   // Sell Condition
    if(maFast < maSlow && maFastPrev >= maSlowPrev)
    {
       double sellPrice = SymbolInfoDouble(_Symbol, SYMBOL_BID);
-      double stopLossLevel = sellPrice + slPips;
-      double takeProfitLevel = sellPrice - tpPips;
-
-      trade.Sell(lotSize, _Symbol, sellPrice, stopLossLevel, takeProfitLevel, "MA Crossover Sell");
+      trade.Sell(lotSize, _Symbol, sellPrice, sellPrice + slPips, sellPrice - tpPips, "Sell Signal");
    }
 }
