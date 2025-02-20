@@ -2,15 +2,15 @@ import yfinance as yf
 import backtrader as bt
 from datetime import datetime
 
-# دریافت داده‌های تاریخی از Yahoo Finance با yfinance
+                                                                                # دریافت داده‌های تاریخی از Yahoo Finance با yfinance
 ticker = "AAPL"
 data = yf.download(ticker, start="2023-01-01", end="2024-01-01")
 
-# ذخیره داده‌ها در فایل CSV
+                                                                                  # ذخیره داده‌ها در فایل CSV
 csv_file = f"{ticker}.csv"
 data.to_csv(csv_file)
 
-# حالا فایل CSV را در Backtrader استفاده می‌کنیم
+                                                                          # حالا فایل CSV را در Backtrader استفاده می‌کنیم
 data_feed = bt.feeds.GenericCSVData(
     dataname=csv_file,
     dtformat="%Y-%m-%d",
@@ -19,7 +19,7 @@ data_feed = bt.feeds.GenericCSVData(
     openinterest=-1
 )
 
-# تعریف یک استراتژی ساده
+                                                                          # تعریف یک استراتژی ساده
 class TestStrategy(bt.Strategy):
     def log(self, txt, dt=None):
         dt = dt or self.datas[0].datetime.date(0)
@@ -31,7 +31,7 @@ class TestStrategy(bt.Strategy):
     def next(self):
         self.log(f"Close: {self.data.close[0]}")
 
-# اجرای استراتژی
+                                                                                    # اجرای استراتژی
 cerebro = bt.Cerebro()
 cerebro.addstrategy(TestStrategy)
 cerebro.adddata(data_feed)

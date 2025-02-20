@@ -30,7 +30,7 @@ class SMAStrategy(bt.Strategy):
                     self.sell()
 
 # تنظیم داده‌ها
-data = bt.feeds.YahooFinanceData(dataname='AAPL.csv', fromdate=datetime.datetime(2023, 1, 1), todate=datetime.datetime(202, 1, 1))
+data = bt.feeds.YahooFinanceData(dataname='EURUSD.csv', fromdate=datetime.datetime(2023, 1, 1), todate=datetime.datetime(202, 1, 1))
 
 cerebro = bt.Cerebro()
 cerebro.adddata(data)
@@ -98,7 +98,7 @@ cerebro.addstrategy(RSIStrategy)
 cerebro.addstrategy(MACDStrategy)
 
 # بارگذاری داده‌های تاریخی (مثال استفاده از داده‌های CSV)
-data = bt.feeds.YahooFinanceData(dataname='AAPL.csv', fromdate=datetime.datetime(2015, 1, 1),
+data = bt.feeds.YahooFinanceData(dataname='EURUSD.csv', fromdate=datetime.datetime(2015, 1, 1),
                                  todate=datetime.datetime(2020, 1, 1))
 
 # اضافه کردن داده به cerebro

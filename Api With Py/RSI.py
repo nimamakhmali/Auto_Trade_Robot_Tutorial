@@ -62,8 +62,8 @@ def place_buy_order(symbol, lot=0.1):
         "volume": lot,
         "type": mt5.ORDER_TYPE_BUY,
         "price": price,
-        "sl": price - 0.0003,  # Stop Loss
-        "tp": price + 0.0006,  # Take Profit
+        "sl": price - 0.0003,                                              # Stop Loss
+        "tp": price + 0.0006,                                                # Take Profit
         "deviation": 10,
         "magic": 123456,
         "comment": "RSI Buy Order",
@@ -85,8 +85,8 @@ def place_sell_order(symbol, lot=0.1):
         "volume": lot,
         "type": mt5.ORDER_TYPE_SELL,
         "price": price,
-        "sl": price + 0.0003,  # Stop Loss
-        "tp": price - 0.0006,  # Take Profit
+        "sl": price + 0.0003,                                    # Stop Loss
+        "tp": price - 0.0006,                                       # Take Profit
         "deviation": 10,
         "magic": 123456,
         "comment": "RSI Sell Order",

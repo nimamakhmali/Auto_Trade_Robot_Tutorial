@@ -41,8 +41,8 @@ def open_trade(symbol="EURUSD", lot=0.1, order_type="buy"):
         "comment": "Python Trade Order",
         "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_FOK,  # Changed to FOK
-        "sl": 0.0,  # Removed SL for testing
-        "tp": 0.0   # Removed TP for testing
+        "sl": 0.0,                               # Removed SL for testing
+        "tp": 0.0                                  # Removed TP for testing
     }
 
     print("🔹 Trade Request:", request)

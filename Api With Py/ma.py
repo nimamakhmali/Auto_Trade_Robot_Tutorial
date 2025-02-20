@@ -3,9 +3,7 @@ import MetaTrader5 as mt5
 import pandas as pd
 import time
 import sys
-import sys
 sys.stdout.reconfigure(encoding='utf-8')
-
 
 # Connect to MetaTrader 5
 def connect_mt5():
