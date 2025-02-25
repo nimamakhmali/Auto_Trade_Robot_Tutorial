@@ -1,0 +1,4 @@
+date,trade_type,entry_price,exit_price,volume,profit_loss
+2025-02-26 00:01:34,Buy,1.2,1.21,0.1,100
+2025-02-26 00:01:34,Sell,1.21,1.2,0.1,-100
+Total,N/A,N/A,N/A,N/A,0
