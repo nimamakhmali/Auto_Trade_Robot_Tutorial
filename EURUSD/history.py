@@ -45,4 +45,3 @@ else:
 
 # Close connection to MetaTrader 5
 mt5.shutdown()
-
